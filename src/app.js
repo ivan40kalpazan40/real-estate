@@ -11,6 +11,8 @@ app.use(routes);
 initDb(connectionString())
   .then(() => {
     console.log('Connected to DB');
+  })
+  .then(() => {
     app.listen(PORT(), () => {
       console.log('Server is listening on port 5000....');
     });
