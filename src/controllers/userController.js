@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
   try {
     const user = await userServices.login(username, password);
     const token = await addToken(user);
-    res.cookie('userCookie', token).redirect('/');
+    res.cookie('userCookie', token, { httpOnly: true }).redirect('/');
   } catch (error) {
     console.log(error.message);
     res.render('404', { error });
