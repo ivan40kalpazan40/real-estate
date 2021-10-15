@@ -1,4 +1,5 @@
 const express = require('express');
+const { isLogged, isGuest } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 const renderAll = (req, res) => {
@@ -10,6 +11,6 @@ const renderCreate = (req, res) => {
 };
 
 router.get('/', renderAll);
-router.get('/create', renderCreate);
+router.get('/create', isLogged, renderCreate);
 
 module.exports = router;
