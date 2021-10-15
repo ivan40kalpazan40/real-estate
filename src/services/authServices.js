@@ -8,3 +8,6 @@ exports.hashPassword = function (password) {
   return bcrypt.hash(password, 10);
 };
 
+exports.compareHashed = function (inputPassword, dbPassword) {
+  return bcrypt.compare(inputPassword, dbPassword);
+};

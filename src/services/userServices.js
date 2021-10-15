@@ -1,5 +1,24 @@
 const User = require('../models/User');
-const { passwordCompare, hashPassword } = require('./authServices');
+const {
+  passwordCompare,
+  hashPassword,
+  compareHashed,
+} = require('./authServices');
+
+const login = async (username, password) => {
+  const user = await User.findOne({ username });
+  const userExist = Boolean(user);
+  if (userExist) {
+    const isMatch = await compareHashed(password, user.password);
+    if (isMatch) {
+      return user;
+    } else {
+      throw new Error('User and/or password do not match');
+    }
+  } else {
+    throw new Error('User and/or password do not match');
+  }
+};
 
 const register = async (fullName, username, password, repeatPassword) => {
   const isEqual = passwordCompare(password, repeatPassword);
@@ -9,5 +28,5 @@ const register = async (fullName, username, password, repeatPassword) => {
   }
   throw new Error('Passwords should match');
 };
-const userServices = { register };
+const userServices = { login, register };
 module.exports = userServices;

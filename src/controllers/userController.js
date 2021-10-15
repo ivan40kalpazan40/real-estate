@@ -2,14 +2,30 @@ const express = require('express');
 const userServices = require('../services/userServices');
 const router = express.Router();
 
+// GET::LOGIN
 const renderLogin = (req, res) => {
   res.render('user/login');
 };
 
+// GET::REGISTER
 const renderRegister = (req, res) => {
   res.render('user/register');
 };
 
+// POST::Login USER
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await userServices.login(username, password);
+    console.log('User Logged');
+    res.redirect('/');
+  } catch (error) {
+    console.log(error.message);
+    res.render('404', { error });
+  }
+};
+
+// POST::REGISTER USER
 const registerUser = async (req, res) => {
   const { name, username, password, repeatPassword } = req.body;
   try {
@@ -19,7 +35,7 @@ const registerUser = async (req, res) => {
       password,
       repeatPassword
     );
-    res.redirect('/');  
+    res.redirect('/');
   } catch (error) {
     console.log(error.message);
     res.render('404', { error });
@@ -27,6 +43,8 @@ const registerUser = async (req, res) => {
 };
 
 router.get('/login', renderLogin);
-router.post('/register', registerUser);
 router.get('/register', renderRegister);
+router.post('/login', loginUser);
+router.post('/register', registerUser);
+
 module.exports = router;
