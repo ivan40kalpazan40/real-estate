@@ -2,6 +2,7 @@ const Housing = require('../models/Housing');
 
 const getHousings = async () => await Housing.find({}).lean();
 
+const getOne = async (id) => await Housing.findOne({ _id: id }).lean();
 const create = async (
   housingName,
   type,
@@ -22,5 +23,5 @@ const create = async (
   });
   return housing;
 };
-const housingService = { create, getHousings };
+const housingService = { create, getHousings, getOne };
 module.exports = housingService;

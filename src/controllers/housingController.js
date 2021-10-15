@@ -16,6 +16,17 @@ const renderCreate = (req, res) => {
   res.render('housing/create', { user: req.user });
 };
 
+const renderDetails = async (req, res) => {
+  const housingId = req.params.id;
+  try {
+    const housing = await housingServices.getOne(housingId);
+    res.render('housing/details', { user: req.user, housing });
+  } catch (error) {
+    console.log(error.message);
+    res.render('404', { error, user: req.user });
+  }
+};
+
 const createHousing = async (req, res) => {
   const { name, type, year, city, image, description, places } = req.body;
   try {
@@ -37,6 +48,7 @@ const createHousing = async (req, res) => {
 
 router.get('/', renderAll);
 router.get('/create', isLogged, renderCreate);
+router.get('/:id/details', renderDetails);
 router.post('/create', isLogged, createHousing);
 
 module.exports = router;
