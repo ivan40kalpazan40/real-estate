@@ -21,7 +21,8 @@ const renderDetails = async (req, res) => {
   const housingId = req.params.id;
   try {
     const housing = await housingServices.getOne(housingId);
-    res.render('housing/details', { user: req.user, housing });
+    const isOwner = housing.owner == req.user._id;
+    res.render('housing/details', { user: req.user, housing, isOwner });
   } catch (error) {
     console.log(error.message);
     res.render('404', { error, user: req.user });
