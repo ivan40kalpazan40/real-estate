@@ -7,7 +7,7 @@ const housingSchema = new mongoose.Schema({
   city: { type: String, required: true },
   image: { type: String, required: true },
   description: { type: String, required: true },
-  pieces: { type: Number, required: true },
+  places: { type: Number, required: true },
   rented: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   owner: { type: mongoose.Types.ObjectId, ref: 'User' },
 });
