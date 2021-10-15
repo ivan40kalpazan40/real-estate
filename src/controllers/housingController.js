@@ -3,8 +3,13 @@ const { isLogged, isGuest } = require('../middleware/authMiddleware');
 const housingServices = require('../services/housingServices');
 const router = express.Router();
 
-const renderAll = (req, res) => {
-  res.render('housing/recent', { user: req.user });
+const renderAll = async (req, res) => {
+  try {
+    const housings = await housingServices.getHousings();
+    res.render('housing/recent', { user: req.user, housings });
+  } catch (error) {
+    res.render('404', { error, user: req.user });
+  }
 };
 
 const renderCreate = (req, res) => {
