@@ -8,6 +8,11 @@ const renderLogin = (req, res) => {
   res.render('user/login');
 };
 
+// GET::LOGOUT
+const logoutUser = (req, res) => {
+  res.clearCookie('userCookie').redirect('/');
+};
+
 // GET::REGISTER
 const renderRegister = (req, res) => {
   res.render('user/register');
@@ -44,6 +49,7 @@ const registerUser = async (req, res) => {
 };
 
 router.get('/login', renderLogin);
+router.get('/logout', logoutUser);
 router.get('/register', renderRegister);
 router.post('/login', loginUser);
 router.post('/register', registerUser);
