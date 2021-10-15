@@ -1,5 +1,6 @@
 const express = require('express');
 const userServices = require('../services/userServices');
+const { addToken } = require('../services/authServices');
 const router = express.Router();
 
 // GET::LOGIN
@@ -17,8 +18,8 @@ const loginUser = async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await userServices.login(username, password);
-    console.log('User Logged');
-    res.redirect('/');
+    const token = await addToken(user);
+    res.cookie('userCookie', token).redirect('/');
   } catch (error) {
     console.log(error.message);
     res.render('404', { error });
