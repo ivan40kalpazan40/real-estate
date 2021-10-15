@@ -12,5 +12,23 @@ const housingSchema = new mongoose.Schema({
   owner: { type: mongoose.Types.ObjectId, ref: 'User' },
 });
 
+housingSchema.method('isOwner', function (userId) {
+  return this.owner == userId;
+});
+housingSchema.method('availability', function () {
+  return this.places - this.rented.length;
+});
+
+housingSchema.method('isAvailable', function () {
+  return this.places - this.rented.length > 0;
+});
+
+housingSchema.method('youRented', function (userId) {
+  return this.rented.includes(userId);
+});
+
+housingSchema.method('showGuests', function () {
+  return this.rented.join(', ');
+});
 const Housing = mongoose.model('Housing', housingSchema);
 module.exports = Housing;
