@@ -10,7 +10,8 @@ const create = async (
   city,
   image,
   description,
-  places
+  places,
+  user
 ) => {
   const housing = await Housing.create({
     name: housingName,
@@ -20,6 +21,7 @@ const create = async (
     image,
     description,
     places,
+    owner: user,
   });
   return housing;
 };

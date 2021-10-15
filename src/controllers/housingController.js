@@ -37,7 +37,8 @@ const createHousing = async (req, res) => {
       city,
       image,
       description,
-      places
+      places,
+      req.user
     );
     console.log('Housing Created!');
     res.redirect('/housing');
