@@ -6,6 +6,7 @@ const router = express.Router();
 const renderAll = async (req, res) => {
   try {
     const housings = await housingServices.getHousings();
+    housings.sort((a, b) => b.year - a.year);
     res.render('housing/recent', { user: req.user, housings });
   } catch (error) {
     res.render('404', { error, user: req.user });
