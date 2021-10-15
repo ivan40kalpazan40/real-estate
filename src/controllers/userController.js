@@ -19,7 +19,7 @@ const registerUser = async (req, res) => {
       password,
       repeatPassword
     );
-    res.redirect('/');
+    res.redirect('/');  
   } catch (error) {
     console.log(error.message);
     res.render('404', { error });
