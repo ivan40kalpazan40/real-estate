@@ -27,6 +27,10 @@ housingSchema.method('youRented', function (userId) {
   return this.rented.includes(userId);
 });
 
+housingSchema.method('rentProperty', function (user) {
+  this.rented.push(user);
+  this.save();
+});
 housingSchema.method('showGuests', function () {
   return this.rented.join(', ');
 });

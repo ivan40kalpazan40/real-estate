@@ -36,7 +36,8 @@
                 {{#if youRented}}
                   <p class='alRentHome'>You have already rent this home</p>
                 {{else}}
-                  <a href='#' class='rentHome'>Rent a home, available
+                  <a href='/housing/{{housing._id}}/rent' class='rentHome'>Rent
+                    a home, available
                     {{availability}}
                     housing</a>
                 {{/if}}

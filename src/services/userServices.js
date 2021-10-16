@@ -5,6 +5,10 @@ const {
   compareHashed,
 } = require('./authServices');
 
+const getUser = async (id) => {
+  return await User.find({ _id: id });
+};
+
 const login = async (username, password) => {
   const user = await User.findOne({ username });
   const userExist = Boolean(user);
@@ -28,5 +32,5 @@ const register = async (fullName, username, password, repeatPassword) => {
   }
   throw new Error('Passwords should match');
 };
-const userServices = { login, register };
+const userServices = { login, register, getUser };
 module.exports = userServices;

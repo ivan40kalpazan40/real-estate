@@ -92,7 +92,7 @@ const editHousing = async (req, res) => {
       description,
       places,
     });
-    res.redirect(`/housing/${housing._id}/details`);
+    res.redirect(`/housing/${housingId}/details`);
   } catch (error) {
     console.log(error.message);
     res.render('404', { error, user: req.user });
@@ -110,6 +110,19 @@ const deleteHousing = async (req, res) => {
   }
 };
 
+const rentProperty = async (req, res) => {
+  const housingId = req.params.id;
+  const user = req.user;
+  try {
+    const housing = await housingServices.getOne(housingId);
+    await housing.rentProperty(user);
+    res.redirect(`/housing/${housingId}/details`);
+  } catch (error) {
+    console.log(error.message);
+    res.render('404', { error, user });
+  }
+};
+
 router.get('/', renderAll);
 router.get('/create', isLogged, renderCreate);
 router.get('/:id/details', renderDetails);
@@ -117,5 +130,6 @@ router.get('/:id/edit', isLogged, renderEdit);
 router.get('/:id/delete', isLogged, deleteHousing);
 router.post('/:id/edit', isLogged, editHousing);
 router.post('/create', isLogged, createHousing);
+router.get('/:id/rent', isLogged, rentProperty);
 
 module.exports = router;

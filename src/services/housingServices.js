@@ -27,11 +27,20 @@ const create = async (
 };
 
 const updateOne = async (id, update) => {
-  return await Housing.findOneAndUpdate({ _id: id }, update);
+  return await Housing.findOneAndUpdate({ _id: id }, update, {
+    runValidators: true,
+  });
 };
 
 const deleteOne = async (id) => {
-  return await Housing.findOneAndDelete({ _id: id });
+  return await Housing.findOneAndDelete({ _id: id }, { runValidators: true });
 };
-const housingService = { create, getHousings, getOne, updateOne, deleteOne };
+
+const housingService = {
+  create,
+  getHousings,
+  getOne,
+  updateOne,
+  deleteOne,
+};
 module.exports = housingService;
