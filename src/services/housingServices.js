@@ -26,8 +26,8 @@ const create = async (
   return housing;
 };
 
-const updateOne = (id, update) => {
-  //TODO
+const updateOne = async (id, update) => {
+  return await Housing.findOneAndUpdate({ _id: id }, update);
 };
 const housingService = { create, getHousings, getOne, updateOne };
 module.exports = housingService;

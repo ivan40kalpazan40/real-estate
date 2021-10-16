@@ -63,7 +63,27 @@ const renderEdit = async (req, res) => {
   const housingId = req.params.id;
   try {
     const housing = await housingServices.getOne(housingId);
-    res.render('housing/edit', { housing: housing._doc });
+    res.render('housing/edit', { housing: housing._doc, user: req.user });
+  } catch (error) {
+    console.log(error.message);
+    res.render('404', { error, user: req.user });
+  }
+};
+
+const editHousing = async (req, res) => {
+  const housingId = req.params.id;
+  const { name, type, year, city, image, description, places } = req.body;
+  try {
+    const housing = await housingServices.updateOne(housingId, {
+      name,
+      type,
+      year,
+      city,
+      image,
+      description,
+      places,
+    });
+    res.redirect('/');
   } catch (error) {
     console.log(error.message);
     res.render('404', { error, user: req.user });
@@ -74,6 +94,7 @@ router.get('/', renderAll);
 router.get('/create', isLogged, renderCreate);
 router.get('/:id/details', renderDetails);
 router.get('/:id/edit', renderEdit);
+router.post('/:id/edit', editHousing);
 router.post('/create', isLogged, createHousing);
 
 module.exports = router;
