@@ -25,5 +25,9 @@ const create = async (
   });
   return housing;
 };
-const housingService = { create, getHousings, getOne };
+
+const updateOne = (id, update) => {
+  //TODO
+};
+const housingService = { create, getHousings, getOne, updateOne };
 module.exports = housingService;

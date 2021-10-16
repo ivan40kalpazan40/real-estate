@@ -59,9 +59,21 @@ const createHousing = async (req, res) => {
   }
 };
 
+const renderEdit = async (req, res) => {
+  const housingId = req.params.id;
+  try {
+    const housing = await housingServices.getOne(housingId);
+    res.render('housing/edit', { housing: housing._doc });
+  } catch (error) {
+    console.log(error.message);
+    res.render('404', { error, user: req.user });
+  }
+};
+
 router.get('/', renderAll);
 router.get('/create', isLogged, renderCreate);
 router.get('/:id/details', renderDetails);
+router.get('/:id/edit', renderEdit);
 router.post('/create', isLogged, createHousing);
 
 module.exports = router;
