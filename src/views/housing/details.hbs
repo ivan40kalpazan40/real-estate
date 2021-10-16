@@ -27,7 +27,10 @@
           <div class='product-btn'>
             {{#if isOwner}}
               <a href='/housing/{{housing._id}}/edit' class='edit'>Edit</a>
-              <a href='#' class='remove'>Delete</a>
+              <a
+                href='/housing/{{housing._id}}/delete'
+                class='remove'
+              >Delete</a>
             {{else}}
               {{#if isAvailable}}
                 {{#if youRented}}

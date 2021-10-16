@@ -1,5 +1,6 @@
 const express = require('express');
 const { isLogged, isGuest } = require('../middleware/authMiddleware');
+const housingService = require('../services/housingServices');
 const housingServices = require('../services/housingServices');
 const router = express.Router();
 
@@ -99,10 +100,22 @@ const editHousing = async (req, res) => {
   }
 };
 
+const deleteHousing = async (req, res) => {
+  const housingId = req.params.id;
+  try {
+    await housingService.deleteOne(housingId);
+    res.redirect('/housing');
+  } catch (error) {
+    console.log(error.message);
+    res.render('404', { error, user: req.user });
+  }
+};
+
 router.get('/', renderAll);
 router.get('/create', isLogged, renderCreate);
 router.get('/:id/details', renderDetails);
 router.get('/:id/edit', isLogged, renderEdit);
+router.get('/:id/delete', isLogged, deleteHousing);
 router.post('/:id/edit', isLogged, editHousing);
 router.post('/create', isLogged, createHousing);
 
