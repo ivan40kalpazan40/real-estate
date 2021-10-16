@@ -1,6 +1,5 @@
 const express = require('express');
 const { isLogged, isGuest } = require('../middleware/authMiddleware');
-const housingService = require('../services/housingServices');
 const housingServices = require('../services/housingServices');
 const router = express.Router();
 
@@ -103,7 +102,7 @@ const editHousing = async (req, res) => {
 const deleteHousing = async (req, res) => {
   const housingId = req.params.id;
   try {
-    await housingService.deleteOne(housingId);
+    await housingServices.deleteOne(housingId);
     res.redirect('/housing');
   } catch (error) {
     console.log(error.message);
