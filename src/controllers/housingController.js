@@ -21,18 +21,27 @@ const renderDetails = async (req, res) => {
   const housingId = req.params.id;
   try {
     const housing = await housingServices.getOne(housingId);
-    const isOwner = housing.isOwner(req.user._id);
     const isAvailable = housing.isAvailable();
     const availability = housing.availability();
-    const youRented = housing.youRented(req.user._id);
-    res.render('housing/details', {
-      user: req.user,
-      housing: housing._doc,
-      isOwner,
-      isAvailable,
-      availability,
-      youRented,
-    });
+    if (Boolean(req.user)) {
+      const isOwner = housing.isOwner(req.user._id);
+      const youRented = housing.youRented(req.user._id);
+      res.render('housing/details', {
+        user: req.user,
+        housing: housing._doc,
+        isOwner,
+        isAvailable,
+        availability,
+        youRented,
+      });
+    } else {
+      res.render('housing/details', {
+        user: req.user,
+        housing: housing._doc,
+        isAvailable,
+        availability,
+      });
+    }
   } catch (error) {
     console.log(error.message);
     res.render('404', { error, user: req.user });
@@ -83,7 +92,7 @@ const editHousing = async (req, res) => {
       description,
       places,
     });
-    res.redirect('/');
+    res.redirect(`/housing/${housing._id}/details`);
   } catch (error) {
     console.log(error.message);
     res.render('404', { error, user: req.user });
