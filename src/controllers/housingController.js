@@ -115,6 +115,9 @@ const rentProperty = async (req, res) => {
   const user = req.user;
   try {
     const housing = await housingServices.getOne(housingId);
+    if (housing.isOwner(user._id)) {
+      throw new Error('You cannot rent your own property!');
+    }
     await housing.rentProperty(user);
     res.redirect(`/housing/${housingId}/details`);
   } catch (error) {
