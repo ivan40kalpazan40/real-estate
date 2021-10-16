@@ -24,7 +24,7 @@ housingSchema.method('isAvailable', function () {
 });
 
 housingSchema.method('youRented', function (userId) {
-  return this.rented.includes(userId);
+  return Boolean(this.rented.find((x) => x._id == userId));
 });
 
 housingSchema.method('rentProperty', function (user) {
@@ -32,7 +32,7 @@ housingSchema.method('rentProperty', function (user) {
   this.save();
 });
 housingSchema.method('showGuests', function () {
-  return this.rented.join(', ');
+  return this.rented.map((x) => x.name).join(', ');
 });
 const Housing = mongoose.model('Housing', housingSchema);
 module.exports = Housing;

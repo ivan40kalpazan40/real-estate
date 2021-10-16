@@ -23,25 +23,22 @@ const renderDetails = async (req, res) => {
     const housing = await housingServices.getOne(housingId);
     const isAvailable = housing.isAvailable();
     const availability = housing.availability();
+    const guests = await housing.showGuests();
+    let isOwner = false;
+    let youRented = false;
     if (Boolean(req.user)) {
-      const isOwner = housing.isOwner(req.user._id);
-      const youRented = housing.youRented(req.user._id);
-      res.render('housing/details', {
-        user: req.user,
-        housing: housing._doc,
-        isOwner,
-        isAvailable,
-        availability,
-        youRented,
-      });
-    } else {
-      res.render('housing/details', {
-        user: req.user,
-        housing: housing._doc,
-        isAvailable,
-        availability,
-      });
+      isOwner = housing.isOwner(req.user._id);
+      youRented = housing.youRented(req.user._id);
     }
+    res.render('housing/details', {
+      user: req.user,
+      housing: housing._doc,
+      guests,
+      isOwner,
+      isAvailable,
+      availability,
+      youRented,
+    });
   } catch (error) {
     console.log(error.message);
     res.render('404', { error, user: req.user });
