@@ -1,13 +1,28 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const housingSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, minlength: 6 },
   type: { type: String, enum: ['Apartment', 'Villa', 'House'], required: true },
-  year: { type: Number, required: true },
-  city: { type: String, required: true },
-  image: { type: String, required: true },
-  description: { type: String, required: true },
-  places: { type: Number, required: true },
+  year: { type: Number, required: true, min: 1850, max: 2021 },
+  city: { type: String, required: true, minlength: 4 },
+  image: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return validator.isURL(v);
+      },
+      message: 'Must be valid url.',
+    },
+  },
+  description: { type: String, required: true, maxlength: 60 },
+  places: {
+    type: Number,
+    required: true,
+    min: [0, 'Cannot add negative value'],
+    max: [10, 'Value must be between 0 and 10'],
+  },
   rented: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   owner: { type: mongoose.Types.ObjectId, ref: 'User' },
 });
