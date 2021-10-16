@@ -12,7 +12,7 @@
             <h4>Year: {{housing.year}}</h4>
             <h4>City: {{housing.city}}</h4>
             <p>{{housing.description}}</p>
-            {{#if housing.rented}}
+            {{#if housing.rented.length}}
 
               <!-- if there are already tenants of the housing, separate their names with a comma and a space ", "  -->
               <p>People rented this housing: Alex Petkov, Ivan Dobrev</p>
