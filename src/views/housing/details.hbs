@@ -28,18 +28,19 @@
             {{#if isOwner}}
               <a href='/housing/{{housing._id}}/edit' class='edit'>Edit</a>
               <a href='#' class='remove'>Delete</a>
-            {{/if}}
-            {{#if isAvailable}}
-              {{#if youRented}}
-                <p class='alRentHome'>You have already rent this home</p>
-              {{else}}
-                <a href='#' class='rentHome'>Rent a home, available
-                  {{availability}}
-                  housing</a>
-              {{/if}}
-
             {{else}}
-              <p class='no-housing'>No Housing Available!</p>
+              {{#if isAvailable}}
+                {{#if youRented}}
+                  <p class='alRentHome'>You have already rent this home</p>
+                {{else}}
+                  <a href='#' class='rentHome'>Rent a home, available
+                    {{availability}}
+                    housing</a>
+                {{/if}}
+
+              {{else}}
+                <p class='no-housing'>No Housing Available!</p>
+              {{/if}}
             {{/if}}
           </div>{{/if}}
       </div>
