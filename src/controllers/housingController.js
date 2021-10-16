@@ -102,8 +102,8 @@ const editHousing = async (req, res) => {
 router.get('/', renderAll);
 router.get('/create', isLogged, renderCreate);
 router.get('/:id/details', renderDetails);
-router.get('/:id/edit', renderEdit);
-router.post('/:id/edit', editHousing);
+router.get('/:id/edit', isLogged, renderEdit);
+router.post('/:id/edit', isLogged, editHousing);
 router.post('/create', isLogged, createHousing);
 
 module.exports = router;
