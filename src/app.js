@@ -1,17 +1,13 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
-const path = require('path');
+
 const routes = require('./routes');
 const { connectionString, PORT } = require('./config/utils');
-const { auth } = require('./middleware/authMiddleware');
+
 const initDb = require('./config/db');
 const app = express();
 
 require('./config/handlebars')(app);
-app.use(express.static(path.resolve(__dirname, './public')));
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(auth);
+require('./config/express.config')(app);
 app.use(routes);
 initDb(connectionString())
   .then(() => {
