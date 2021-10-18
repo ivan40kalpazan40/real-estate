@@ -3,7 +3,11 @@ const validator = require('validator');
 
 const housingSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 6 },
-  type: { type: String, enum: ['Apartment', 'Villa', 'House'], required: true },
+  type: {
+    type: String,
+    enum: {values:['Apartment', 'Villa', 'House'], message:'Please use one of the options!'},
+    required: true,
+  },
   year: { type: Number, required: true, min: 1850, max: 2021 },
   city: { type: String, required: true, minlength: 4 },
   image: {
